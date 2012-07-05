@@ -1,4 +1,4 @@
-story_name, task_name, task_items, Done, Estimate
+story,task,details,done,estimate
 Organize Externals, Internet survey, S # K # M, We have finished, 8
 Organize Externals, Internet survey, S # K # M, We have finished, 8
 Organize Externals, Internet survey, S # K # M, We have finished, 8
