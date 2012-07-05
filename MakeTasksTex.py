@@ -14,42 +14,32 @@ Assigned to: & Estimate: $estimate & Reviewer:
     \end{frame}
 '''
 
-
 list_delim = r'\item '
 
-# TODO: Extract automatically from header
-var_map = { '$story' : 0,
-        '$task' : 1,
-        '$details' : 2,
-        '$done' : 3,
-        '$estimate' : 4}
-
-def expand_itemize(fields, key):
-    text_var = fields[key].strip()
+def expand_itemize(fields, index):
+    text_var = fields[index].strip()
     items = text_var.split('#')
     if len(items) > 1:
-        fields[key] = '\\begin{itemize}\n' + \
+        fields[index] = '\\begin{itemize}\n' + \
                       list_delim + list_delim.join(items) + \
                       '\\end{itemize}\n'
 
 # Print header
 file_header = open('TaskHeader.tex', 'r')
-line = file_header.readline();
-while line:
+for line in file_header:
     print line
-    line = file_header.readline()
 
 line = sys.stdin.readline()
-line = sys.stdin.readline()
-while line:
-    fields = line.split(',')
+columns = map(str.strip, line.split(','))
+
+for line in sys.stdin:
+    fields = map(str.strip, line.split(','))
     slide = template_slide
-    for key in var_map:
-        expand_itemize(fields, var_map[key]);
-        slide = slide.replace(key, fields[var_map[key]]);
+    for i_field in xrange(len(fields)):
+        expand_itemize(fields, i_field);
+        slide = slide.replace('$' + columns[i_field], fields[i_field]);
 
     print slide
-    line = sys.stdin.readline()
 
 # Close document
 print r'\end{document}'
