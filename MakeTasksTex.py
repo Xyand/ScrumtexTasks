@@ -34,6 +34,11 @@ columns = map(str.strip, line.split(','))
 
 for line in sys.stdin:
     fields = map(str.strip, line.split(','))
+
+    if not len(fields) == len(columns):
+        sys.stderr.write('Field number mismatch\n')
+        sys.exit(1)
+
     slide = template_slide
     for i_field in xrange(len(fields)):
         expand_itemize(fields, i_field);
