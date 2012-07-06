@@ -1,7 +1,7 @@
 story,task,details,done,estimate
 Organize Externals, Internet survey, S # K # M, We have finished, 8
 Organize Externals, Internet survey, S # K # M, We have finished, 8
+buga, Internet survey, S # K # M, We have finished, 8
 Organize Externals, Internet survey, S # K # M, We have finished, 8
-Organize Externals, Internet survey, S # K # M, We have finished, 8
-Organize Externals, Internet survey, S # K # M, We have finished, 8
+Externals, Internet survey, S # K # M, We have finished, 8
 Organize Externals, Internet survey, S # K # M, We have finished # or not, 8
