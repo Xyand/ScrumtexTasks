@@ -1,5 +1,6 @@
 import sys
 
+#TODO: Replace find and replace wit format
 template_slide = r'''
 \begin{frame}[t]{$story}
 \begin{block}{$task}
@@ -14,6 +15,7 @@ Assigned to: & Estimate: $estimate & Reviewer:
     \end{frame}
 '''
 
+color_command = r'\usecolortheme[named={color}]{{structure}}'
 list_delim = r'\item '
 
 def expand_itemize(fields, index):
@@ -28,6 +30,9 @@ def expand_itemize(fields, index):
 file_header = open('TaskHeader.tex', 'r')
 for line in file_header:
     print line
+
+print color_command.format(color='green')
+print r'\begin{document}'
 
 line = sys.stdin.readline()
 columns = map(str.strip, line.split(','))
