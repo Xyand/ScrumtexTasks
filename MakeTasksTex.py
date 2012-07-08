@@ -5,7 +5,7 @@ from os.path import isdir
 
 #TODO: Replace find and replace wit format
 template_slide = r'''
-\begin{frame}[t]{$story}
+\begin{frame}[t]{\LARGE \textbf{$story}}
 \begin{block}{$task}
 $details
 \end{block}
