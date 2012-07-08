@@ -1,4 +1,5 @@
 import sys
+from string import Template
 from collections import defaultdict
 from os import mkdir
 from os.path import isdir
@@ -11,11 +12,12 @@ color_list = ['red', 'green', 'blue', 'cyan', 'brown', 'orange', 'gray',  'teal'
 color_command = r'\usecolortheme[named={color}]{{structure}}'
 list_delim = r'\item '
 
-def expand_itemize(fields, index):
-    text_var = fields[index].strip()
-    items = text_var.split('#')
-    if len(items) > 1:
-        fields[index] = '\\begin{{itemize}}\n{}\\end{{itemize}}\n' \
+def expand_itemize(field):
+    items = field.strip().split('#')
+    if len(items) <= 1:
+        return field.strip();
+
+    return '\\begin{{itemize}}\n{}\\end{{itemize}}\n' \
             .format(list_delim + list_delim.join(items))
 
 # TODO: Make it a class
@@ -40,12 +42,8 @@ def make_story(name_story, tasks, color, columns, template):
             sys.stderr.write('Field number mismatch: ' + str(len(fields)) + '\n')
             sys.exit(1)
 
-        slide = template
-        for i_field in xrange(len(fields)):
-            expand_itemize(fields, i_field);
-            slide = slide.replace('$' + columns[i_field], fields[i_field]);
-
-        tex_out.write(slide)
+        fields = map(expand_itemize, fields)
+        tex_out.write(template.safe_substitute(dict(zip(columns, fields))))
 
     # Close document
     tex_out.write('\\end{document}\n')
@@ -53,7 +51,7 @@ def make_story(name_story, tasks, color, columns, template):
 
 # Read frame template
 frame_template_file = open('./FrameTemplate.tex','r')
-frame_template = frame_template_file.read()
+frame_template = Template(frame_template_file.read())
 
 line = sys.stdin.readline()
 columns = map(str.strip, line.split(','))
