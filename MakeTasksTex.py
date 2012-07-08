@@ -18,7 +18,7 @@ Assigned to: & Estimate: $estimate & Reviewer:
     \end{frame}
 '''
 
-color_list = ['red', 'green', 'blue', 'black', 
+color_list = ['red', 'green', 'blue', 'cyan', 
         'brown', 'orange', 'gray', 
         'teal', 'olive', 'magenta']
 
