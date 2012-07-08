@@ -49,16 +49,17 @@ def main():
     frame_template_file = open('./FrameTemplate.tex','r')
     frame_template = Template(frame_template_file.read())
 
+    # Read column names
     line = sys.stdin.readline()
     columns = map(str.strip, line.split(','))
 
-    task_lines = sys.stdin.readlines()
+    # Split tasks to user stories
     grouped_lines = defaultdict(list)
-
-    for line in task_lines:
+    for line in sys.stdin:
         line_split = line.split(',')
         grouped_lines[line_split[0]].append(line_split)
 
+    # Crate tex file for every user story
     color = 0
     for name_story in grouped_lines:
         make_story(name_story, 
