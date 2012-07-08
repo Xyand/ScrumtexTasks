@@ -22,11 +22,22 @@ def expand_itemize(field):
 
 
 class ScrumtexBuilder:
+    """ Transforms parsed CSV task files into latex presentation files. The format of the
+    input files is of the form:
+    
+    key_name1, key_name2, key_name3, ....
+    val1, val2, val3, ...
+    .
+    .
+    .
+
+    The key names should match the template arguments of the form "$name" in the template file
+    """
 
     def __init__(self, columns, folder_out, file_header, file_template):
+        """ Sets the task field names and reads template files """
+
         self.folder_out = folder_out
-        if not isdir(folder_out): 
-            mkdir(folder_out)
 
         # Set header
         file_header = open(file_header, 'r');
@@ -40,16 +51,20 @@ class ScrumtexBuilder:
         self.template_frame = Template(file_template_frame.read())
  
     def set_color(self):
+        """ Print the current color setting command and advance to the next color in a
+        circular manner """
+
         self.tex_out.write(color_command.format(color=color_list[self.color]))
         self.color = (self.color + 1) % len(color_list)
 
     def set_header(self):
+        """ Print presentation header section """
         self.tex_out.write(self.header)
-
-    def begin_document(self):
+        self.set_color()
         self.tex_out.write('\\begin{document}\n')
 
     def end_document(self):
+        """ Write the final close of the presentation tex file and close the file """
         self.tex_out.write('\\end{document}\n')
         self.tex_out.close()
 
@@ -57,10 +72,7 @@ class ScrumtexBuilder:
         ''' Create a tex file for a specific user story given its name tasks and color '''
 
         self.tex_out = open('{}/{}.tex'.format(self.folder_out, name_story), 'w');
-
         self.set_header()
-        self.set_color()
-        self.begin_document()
 
         # Render tasks
         for fields in tasks:
