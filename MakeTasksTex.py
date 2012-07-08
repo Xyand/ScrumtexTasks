@@ -34,8 +34,8 @@ class ScrumtexBuilder:
     The key names should match the template arguments of the form "$name" in the template file
     """
 
-    def __init__(self, columns, folder_out, file_header, file_template):
-        """ Sets the task field names and reads template files """
+    def __init__(self, folder_out, file_header, file_template):
+        """ Reads template files """
 
         self.folder_out = folder_out
 
@@ -43,7 +43,6 @@ class ScrumtexBuilder:
         file_header = open(file_header, 'r');
         self.header = file_header.read();
 
-        self.columns = columns
         self.color = 0
 
         # Read frame template
@@ -85,29 +84,23 @@ class ScrumtexBuilder:
         # Close document
         self.end_document()
 
-def main():
-    ''' Create all user story tex files '''
+    def process_csv(self, file_in):
+        ''' Create all user story tex files by parsing CSV'''
 
-    # Read column names
-    line = sys.stdin.readline()
-    columns = map(str.strip, line.split(','))
+        # Read column names
+        line = file_in.readline()
+        self.columns = map(str.strip, line.split(','))
 
-    # Initialize tex builder
-    tex_builder = ScrumtexBuilder(columns, \
-            sys.argv[1], \
-            './TaskHeader.tex', \
-            './FrameTemplate.tex')
+        # Split tasks to user stories
+        grouped_lines = defaultdict(list)
+        for line in file_in:
+            line_split = line.split(',')
+            grouped_lines[line_split[0]].append(line_split)
 
-    # Split tasks to user stories
-    grouped_lines = defaultdict(list)
-    for line in sys.stdin:
-        line_split = line.split(',')
-        grouped_lines[line_split[0]].append(line_split)
-
-    # Crate tex file for every user story
-    color = 0
-    for name_story in grouped_lines:
-        tex_builder.make_story(name_story, grouped_lines[name_story])
+        # Crate tex file for every user story
+        for name_story in grouped_lines:
+            self.make_story(name_story, grouped_lines[name_story])
 
 if __name__ == '__main__':
-    main()
+    tex_builder = ScrumtexBuilder(sys.argv[1], './TaskHeader.tex', './FrameTemplate.tex')
+    tex_builder.process_csv(sys.stdin)
