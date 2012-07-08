@@ -20,62 +20,87 @@ def expand_itemize(field):
     return '\\begin{{itemize}}\n{}\\end{{itemize}}\n' \
             .format(list_delim + list_delim.join(items))
 
-# TODO: Make it a class
-def make_story(name_story, tasks, color, columns, template):
-    ''' Create a tex file for a specific user story given its name tasks and color '''
 
-    name_folder = sys.argv[1]
-    if not isdir(name_folder): 
-        mkdir(name_folder)
-    tex_out = open('{}/{}.tex'.format(name_folder, name_story), 'w');
+class ScrumtexBuilder:
+    """ Transforms parsed CSV task files into latex presentation files. The format of the
+    input files is of the form:
+    
+    key_name1, key_name2, key_name3, ....
+    val1, val2, val3, ...
+    .
+    .
+    .
 
-    # Print header
-    file_header = open('TaskHeader.tex', 'r')
-    tex_out.writelines(file_header)
-    # Choose color
-    tex_out.write(color_command.format(color=color))
+    The key names should match the template arguments of the form "$name" in the template file
+    """
 
-    # Begin document
-    tex_out.write('\\begin{document}\n')
+    def __init__(self, folder_out, file_header, file_template):
+        """ Reads template files """
 
-    # Render tasks
-    for fields in tasks:
-        assert len(fields) == len(columns), 'Field number mismatch: ' + str(len(fields))
-        fields = map(expand_itemize, fields)
-        tex_out.write(template.safe_substitute(dict(zip(columns, fields))))
+        self.folder_out = folder_out
 
-    # Close document
-    tex_out.write('\\end{document}\n')
-    tex_out.close()
+        # Set header
+        file_header = open(file_header, 'r');
+        self.header = file_header.read();
 
-def main():
-    ''' Create all user story tex files '''
+        self.color = 0
 
-    # Read frame template
-    frame_template_file = open('./FrameTemplate.tex','r')
-    frame_template = Template(frame_template_file.read())
+        # Read frame template
+        file_template_frame = open(file_template,'r')
+        self.template_frame = Template(file_template_frame.read())
+ 
+    def __set_color(self):
+        """ Print the current color setting command and advance to the next color in a
+        circular manner """
 
-    # Read column names
-    line = sys.stdin.readline()
-    columns = map(str.strip, line.split(','))
+        self.tex_out.write(color_command.format(color=color_list[self.color]))
+        self.color = (self.color + 1) % len(color_list)
 
-    # Split tasks to user stories
-    grouped_lines = defaultdict(list)
-    for line in sys.stdin:
-        line_split = line.split(',')
-        grouped_lines[line_split[0]].append(line_split)
+    def __set_header(self):
+        """ Print presentation header section """
+        self.tex_out.write(self.header)
+        self.__set_color()
+        self.tex_out.write('\\begin{document}\n')
 
-    # Crate tex file for every user story
-    color = 0
-    for name_story in grouped_lines:
-        make_story(name_story, 
-                grouped_lines[name_story], 
-                color_list[color], 
-                columns, 
-                frame_template)
+    def __end_document(self):
+        """ Write the final close of the presentation tex file and close the file """
+        self.tex_out.write('\\end{document}\n')
+        self.tex_out.close()
 
-        color = (color + 1) % len(color_list)
+    def __make_story(self, name_story, tasks):
+        ''' Create a tex file for a specific user story given its name tasks and color '''
 
+        self.tex_out = open('{}/{}.tex'.format(self.folder_out, name_story), 'w');
+        self.__set_header()
+
+        # Render tasks
+        for fields in tasks:
+            assert len(fields) == len(self.columns), \
+                'Field number mismatch: ' + str(len(fields))
+            fields = map(expand_itemize, fields)
+            fields_cols = dict(zip(self.columns, fields))
+            self.tex_out.write(self.template_frame.safe_substitute(fields_cols))
+
+        # Close document
+        self.__end_document()
+
+    def process_csv(self, file_in):
+        ''' Create all user story tex files by parsing CSV'''
+
+        # Read column names
+        line = file_in.readline()
+        self.columns = map(str.strip, line.split(','))
+
+        # Split tasks to user stories
+        grouped_lines = defaultdict(list)
+        for line in file_in:
+            line_split = line.split(',')
+            grouped_lines[line_split[0]].append(line_split)
+
+        # Crate tex file for every user story
+        for name_story in grouped_lines:
+            self.__make_story(name_story, grouped_lines[name_story])
 
 if __name__ == '__main__':
-    main()
+    tex_builder = ScrumtexBuilder(sys.argv[1], './TaskHeader.tex', './FrameTemplate.tex')
+    tex_builder.process_csv(sys.stdin)
