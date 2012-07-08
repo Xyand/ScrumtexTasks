@@ -34,7 +34,7 @@ def expand_itemize(fields, index):
 
 # TODO: Make it a class
 def make_story(name_story, tasks, color, columns):
-    name_folder = 'out'
+    name_folder = sys.argv[1]
     if not isdir(name_folder): 
         mkdir(name_folder)
     tex_out = open('{}/{}.tex'.format(name_folder, name_story), 'w');
