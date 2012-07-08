@@ -51,7 +51,7 @@ def make_story(name_story, tasks, color, columns):
     # Render tasks
     for fields in tasks:
         if not len(fields) == len(columns):
-            sys.stderr.write('Field number mismatch\n')
+            sys.stderr.write('Field number mismatch: ' + str(len(fields)) + '\n')
             sys.exit(1)
 
         slide = template_slide
@@ -59,7 +59,7 @@ def make_story(name_story, tasks, color, columns):
             expand_itemize(fields, i_field);
             slide = slide.replace('$' + columns[i_field], fields[i_field]);
 
-    tex_out.write(slide)
+        tex_out.write(slide)
 
     # Close document
     tex_out.write('\\end{document}\n')
