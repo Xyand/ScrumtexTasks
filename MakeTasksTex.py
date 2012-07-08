@@ -38,10 +38,7 @@ def make_story(name_story, tasks, color, columns, template):
 
     # Render tasks
     for fields in tasks:
-        if not len(fields) == len(columns):
-            sys.stderr.write('Field number mismatch: ' + str(len(fields)) + '\n')
-            sys.exit(1)
-
+        assert len(fields) == len(columns), 'Field number mismatch: ' + str(len(fields))
         fields = map(expand_itemize, fields)
         tex_out.write(template.safe_substitute(dict(zip(columns, fields))))
 
