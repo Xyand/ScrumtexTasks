@@ -19,8 +19,8 @@ Assigned to: & Estimate: $estimate & Reviewer:
 '''
 
 color_list = ['red', 'green', 'blue', 'black', 
-        'brown', 'orange', 'greenyellow', 
-        'sepia', 'grey', 'magenta']
+        'brown', 'orange', 'gray', 
+        'teal', 'olive', 'magenta']
 
 color_command = r'\usecolortheme[named={color}]{{structure}}'
 list_delim = r'\item '
