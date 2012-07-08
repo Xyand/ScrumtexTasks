@@ -49,29 +49,29 @@ class ScrumtexBuilder:
         file_template_frame = open(file_template,'r')
         self.template_frame = Template(file_template_frame.read())
  
-    def set_color(self):
+    def __set_color(self):
         """ Print the current color setting command and advance to the next color in a
         circular manner """
 
         self.tex_out.write(color_command.format(color=color_list[self.color]))
         self.color = (self.color + 1) % len(color_list)
 
-    def set_header(self):
+    def __set_header(self):
         """ Print presentation header section """
         self.tex_out.write(self.header)
-        self.set_color()
+        self.__set_color()
         self.tex_out.write('\\begin{document}\n')
 
-    def end_document(self):
+    def __end_document(self):
         """ Write the final close of the presentation tex file and close the file """
         self.tex_out.write('\\end{document}\n')
         self.tex_out.close()
 
-    def make_story(self, name_story, tasks):
+    def __make_story(self, name_story, tasks):
         ''' Create a tex file for a specific user story given its name tasks and color '''
 
         self.tex_out = open('{}/{}.tex'.format(self.folder_out, name_story), 'w');
-        self.set_header()
+        self.__set_header()
 
         # Render tasks
         for fields in tasks:
@@ -82,7 +82,7 @@ class ScrumtexBuilder:
             self.tex_out.write(self.template_frame.safe_substitute(fields_cols))
 
         # Close document
-        self.end_document()
+        self.__end_document()
 
     def process_csv(self, file_in):
         ''' Create all user story tex files by parsing CSV'''
@@ -99,7 +99,7 @@ class ScrumtexBuilder:
 
         # Crate tex file for every user story
         for name_story in grouped_lines:
-            self.make_story(name_story, grouped_lines[name_story])
+            self.__make_story(name_story, grouped_lines[name_story])
 
 if __name__ == '__main__':
     tex_builder = ScrumtexBuilder(sys.argv[1], './TaskHeader.tex', './FrameTemplate.tex')
