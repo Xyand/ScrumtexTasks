@@ -11,6 +11,8 @@ color_command = r'\usecolortheme[named={color}]{{structure}}'
 list_delim = r'\item '
 
 def expand_itemize(field):
+    ''' Expand field text to a latex \\itemize clause. Items are to be delimited with #'''
+
     items = field.strip().split('#')
     if len(items) <= 1:
         return field.strip();
@@ -20,6 +22,8 @@ def expand_itemize(field):
 
 # TODO: Make it a class
 def make_story(name_story, tasks, color, columns, template):
+    ''' Create a tex file for a specific user story given its name tasks and color '''
+
     name_folder = sys.argv[1]
     if not isdir(name_folder): 
         mkdir(name_folder)
@@ -45,6 +49,8 @@ def make_story(name_story, tasks, color, columns, template):
     tex_out.close()
 
 def main():
+    ''' Create all user story tex files '''
+
     # Read frame template
     frame_template_file = open('./FrameTemplate.tex','r')
     frame_template = Template(frame_template_file.read())
