@@ -7,11 +7,12 @@ templates can be further customized.
 Prerequisites (Linux):
     pdftk - Used to combine multiple PDF files into one
     latex-beamer - Latex presentation class
+    lmodern
     latex - tex-live, miktex or any other
     python
 
 Usage:
-    cat tasks_file.csv | ./MakeTasks.sh folder_out
+    ./MakeTasks.sh task_file folder_out
 
 Format:
 By default the CSV file has to contain 5 fields identified by name in 
