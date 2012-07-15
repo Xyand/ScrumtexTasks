@@ -1,0 +1,28 @@
+General:
+ScrumtexTasks is a simple tool that generates printable task notes 
+from spreadsheet data. To use it all you need to do is export the
+task contents to a CSV file and run the script. The script and its 
+templates can be further customized.
+
+Prerequisites (Linux):
+    pdftk - Used to combine multiple PDF files into one
+    latex-beamer - Latex presentation class
+    latex - tex-live, miktex or any other
+    python
+
+Usage:
+    cat tasks_file.csv | ./MakeTasks.sh folder_out
+
+Format:
+By default the CSV file has to contain 5 fields identified by name in 
+the first line of the CSV file (see tasks.txt for an example). Currently
+the first field must the the task title (mostly user-story). The notes are color grouped by equi-titled tasks.
+
+To specify a list of elements separate them using a hash `#` in a single CSV
+field. The hash `#` is not to be used for any other purpose in the CSV.
+
+Customization:
+To modify the layout of the note you can edit the Latex templates in 
+FrameTemplate.tex and TaskHeader.tex. Every template argument that begin
+with a '$' in FrameTemplate.te must be matched by an appropriate field
+in the CSV file.
