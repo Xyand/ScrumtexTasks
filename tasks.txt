@@ -1,7 +1,5 @@
 story,task,details,done,estimate
-Organize Externals, Internet survey, S # K # M, We have finished, 8
-Organize Externals, Internet survey, S # K # M, We have finished, 8
-buga, Internet survey, S # K # M, We have finished, 8
-Organize Externals, Internet survey, S # K # M, We have finished, 8
-Externals, Internet survey, S # K # M, We have finished, 8
-Organize Externals, Internet survey, S # K # M, We have finished # or not, 8
+Organize Externals, Internet survey, Discuss with team, A method is chosen, 8
+Organize Externals, Apply to externals, All externals, All externals are organized consistently, 13
+Add batch mode, Write command line parser, Supports all UI commands # Intuituve interface, All UI options supported, 8
+Add batch mode, Write batch test, Common scenarios conly, Tests exist # Issues are logged, 20
