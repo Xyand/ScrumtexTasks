@@ -1,7 +1,28 @@
 story,task,details,done,estimate
-Organize Externals, Internet survey, S # K # M, We have finished, 8
-Organize Externals, Internet survey, S # K # M, We have finished, 8
-buga, Internet survey, S # K # M, We have finished, 8
-Organize Externals, Internet survey, S # K # M, We have finished, 8
-Externals, Internet survey, S # K # M, We have finished, 8
-Organize Externals, Internet survey, S # K # M, We have finished # or not, 8
+"Story 1","Internet survey","S # K # M","We have finished",8
+"Story 2","Internet survey","S # K # M","We have finished",8
+"Story 3","Internet survey","S # K # M","We have finished",8
+"Story 4","Internet survey","S # K # M","We have finished",8
+"Story 5","Internet survey","S # K # M","We have finished # or not",8
+"Story 6","Internet survey","S # K # M","We have finished",8
+"Story 7","Internet survey","S # K # M","We have finished",8
+"Story 8","Internet survey","S # K # M","We have finished # or not",8
+"Story 9","Internet survey","S # K # M","We have finished",8
+"Story 10","Internet survey","S # K # M","We have finished",8
+"Story 11","Internet survey","S # K # M","We have finished # or not",8
+"Story 12","Internet survey","S # K # M","We have finished # or not",8
+"Story 13","Internet survey","S # K # M","We have finished # or not",8
+"Story 14","Internet survey","S # K # M","We have finished # or not",8
+"Story 15","Internet survey","S # K # M","We have finished # or not",8
+"Story 16","Internet survey","S # K # M","We have finished # or not",8
+"Story 17","Internet survey","S # K # M","We have finished # or not",8
+"Story 18","Internet survey","S # K # M","We have finished # or not",8
+"Story 19","Internet survey","S # K # M","We have finished # or not",8
+"Story 20","Internet survey","S # K # M","We have finished # or not",8
+"Story 21","Internet survey","S # K # M","We have finished # or not",8
+"Story 22","Internet survey","S # K # M","We have finished # or not",8
+"Story 23","Internet survey","S # K # M","We have finished # or not",8
+"Story 24","Internet survey","S # K # M","We have finished # or not",8
+"Story 25","Internet survey","S # K # M","We have finished # or not",8
+"Story 26","Internet survey","S # K # M","We have finished # or not",8
+"Story 27","Internet survey","S # K # M","We have finished # or not",8
